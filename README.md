@@ -81,11 +81,13 @@ export OPENAI_API_KEY=<insert your openai key>
 4. Install dependencies: `poetry install --no-root`
 
 ## TODO
-[ ] Handle optional parameters
-[ ] Handle parameters with default values
+[X] Handle optional parameters
+[X] Handle parameters with default values
+[ ] If OpenAI doesn't return parameters, use the default values
 [ ] Publish to PyPI
 [ ] Add more tests
-[ ] Add CI/CD
+[ ] Fix CI/CD -- workflow that deploys the pre-release to PyPI fails because the version needs to be updated firs.
+[ ] Add more examples
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
