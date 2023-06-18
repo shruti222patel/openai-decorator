@@ -9,9 +9,8 @@ The OpenAI Function Decorator is a Python package that enriches your Python func
 - [Usage Guide](#usage-guide)
   - [Basic Usage](#basic-usage)
   - [Type Annotations & Optionals](#type-annotations-optionals)
-  - [Dynamic Prompts](#dynamic-prompts)
-    - [Passing a Callable Prompt](#passing-callable-prompts)
-    - [Using the Decorator as a Regular Function](#using-the-decorator-as-a-regular-function)
+  - [Passing a Callable Prompt](#passing-callable-prompts)
+  - [Using the Decorator as a Regular Function](#using-the-decorator-as-a-regular-function)
 - [Contributing](#contributing)
   - [Setup](#setup)
 - [Future Enhancements](#future-enhancements)
@@ -82,9 +81,7 @@ def example_function(a: int, b: int, c: float = 0.0, d: List[int] = []):
     # Function body here
 ```
 
-### Dynamic Prompts
-
-#### Passing Callable Prompts
+### Passing Callable Prompts
 
 In addition to static strings, you can also pass a callable to the `prompt` parameter in the `openai_func` decorator to dynamically generate prompts. This callable should take no arguments and return a string. Here's an example:
 
@@ -117,7 +114,7 @@ print(result)
 
 In this example, every time `example_function` is called, `generate_prompt
 
-#### Using the Decorator as a Regular Function
+### Using the Decorator as a Regular Function
 
 `openai_func` can also be used as a regular function. First, call `openai_func` with the prompt and any other arguments to get the actual decorator. Then, apply this decorator to your function.
 
