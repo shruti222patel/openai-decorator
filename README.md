@@ -1,6 +1,6 @@
-# OpenAI Function Decorator Python Package
+# OpenAI Decorator
 
-The OpenAI Function Decorator is a Python package that enriches your Python functions with the capabilities of OpenAI's API. It leverages the function's signature and docstring to generate specifications comprehensible by OpenAI's API, subsequently making a request to the API.
+The OpenAI Decorator is a Python package that enriches your Python functions with the capabilities of OpenAI's API. It leverages the function's signature and docstring to generate specifications comprehensible by OpenAI's API, subsequently making a request to the API.
 
 ## Table of Contents
 
