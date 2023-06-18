@@ -3,8 +3,12 @@ name: PR Checks
 on:
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  pr-checks:
+  pre-commit-and-tests:
     strategy:
       matrix:
         python-version: [ "3.8", "3.9", "3.10", "3.11" ]
