@@ -8,8 +8,10 @@ The OpenAI Function Decorator is a Python package that enriches your Python func
 - [Installation](#installation)
 - [Usage Guide](#usage-guide)
   - [Basic Usage](#basic-usage)
-  - [Advanced Usage](#advanced-usage)
-- [Requirements](#requirements)
+  - [Type Annotations & Optionals](#type-annotations-optionals)
+  - [Dynamic Prompts](#dynamic-prompts)
+    - [Passing a Callable Prompt](#passing-callable-prompts)
+    - [Using the Decorator as a Regular Function](#using-the-decorator-as-a-regular-function)
 - [Contributing](#contributing)
   - [Setup](#setup)
 - [Future Enhancements](#future-enhancements)
@@ -33,12 +35,12 @@ pip install openai-decorator
 ## Usage Guide
 
 ### Basic Usage
-Apply the `openai` decorator to a function with type annotations and a well-formatted Google Style docstring. Then, it will seamlessly interact with OpenAI's API to pull the parameters for your function based on the prompt.
+Apply the `openai_func` decorator to a function with type annotations and a well-formatted Google Style docstring. Then, it will seamlessly interact with OpenAI's API to generate the parameters for your function based on the prompt.
 
 ```python
-from openai_decorator import openai
+from openai_decorator import openai_func
 
-@openai(prompt="Your OpenAI prompt here")
+@openai_func(prompt="Your OpenAI prompt here")
 def example_function(arg1: str, arg2: int) -> str:
     """
     This is an example function.
@@ -56,7 +58,7 @@ result = example_function()
 print(result)
 ```
 
-### Advanced Usage
+### Type Annotations & Optionals
 
 The decorator efficiently handles complex function signatures:
 
@@ -67,8 +69,9 @@ The decorator efficiently handles complex function signatures:
 from openai_decorator import openai_func
 
 @openai_func(prompt="Perform mathematical operations")
-def math_ops(a: int, b: int, c: float = 0.0, d: List[int] = []):
-    """Performs a series of mathematical operations.
+def example_function(a: int, b: int, c: float = 0.0, d: List[int] = []):
+    """
+    This is an example function.
 
     Args:
         a: The first integer.
@@ -78,6 +81,71 @@ def math_ops(a: int, b: int, c: float = 0.0, d: List[int] = []):
     """
     # Function body here
 ```
+
+### Dynamic Prompts
+
+#### Passing Callable Prompts
+
+In addition to static strings, you can also pass a callable to the `prompt` parameter in the `openai_func` decorator to dynamically generate prompts. This callable should take no arguments and return a string. Here's an example:
+
+```python
+from openai_decorator import openai_func
+
+def generate_prompt():
+    # Dynamically generate a prompt.
+    # In a real-world scenario, this could depend on various factors,
+    # such as the current time or the latest trending topics.
+    return "Your OpenAI prompt here"
+
+@openai_func(prompt=generate_prompt)
+def example_function(arg1: str, arg2: int) -> str:
+    """
+    This is an example function.
+
+    Args:
+        arg1 (str): Description for arg1
+        arg2 (int): Description for arg2
+
+    Returns:
+        str: Description for return value
+    """
+    return f"Your output here: {arg1} and {arg2}"
+
+result = example_function()
+print(result)
+```
+
+In this example, every time `example_function` is called, `generate_prompt
+
+#### Using the Decorator as a Regular Function
+
+`openai_func` can also be used as a regular function. First, call `openai_func` with the prompt and any other arguments to get the actual decorator. Then, apply this decorator to your function.
+
+```python
+from openai_decorator import openai_func
+
+def example_function(arg1: str, arg2: int) -> str:
+    """
+    This is an example function.
+
+    Args:
+        arg1 (str): Description for arg1
+        arg2 (int): Description for arg2
+
+    Returns:
+        str: Description for return value
+    """
+    return f"Your output here: {arg1} and {arg2}"
+
+# Use openai_func as a regular function
+prompt = "Your OpenAI prompt here"
+
+example_func_with_generated_params = openai_func(prompt=prompt)(example_function)
+
+result = example_func_with_generated_params()
+print(result)
+```
+This approach gives you more flexibility in determining the prompt at runtime.
 
 ## Contributing
 
@@ -101,8 +169,10 @@ export OPENAI_API_KEY=<insert your openai key>
 - [ ] Add test to ensure default values are used if OpenAI doesn't return parameters.
 - [ ] Publish the package to PyPI.
 - [ ] Expand test coverage.
+- [ ] Show tests passing & coverage as github badges.
 - [ ] Fix CI/CD -- Address the issue where the pre-release deployment to PyPI fails due to the need for version update.
-- [ ] Add more examples.
+- [ ] Add docstrings.
+- [ ] Generate docs (from docstrings).
 
 ## License
 
