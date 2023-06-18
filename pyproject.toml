@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "openai-decorator"
-version = "0.1.0"
+version = "0.1.1"
 description = "This package allows you to genrate function paramater values by integrating OpenAI's API function capabilities through signature and docstring analysis."
 authors = ["Shruti Patel <shruti222patel@gmail.com>"]
 license = "MIT"
