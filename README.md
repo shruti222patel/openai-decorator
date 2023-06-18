@@ -30,6 +30,10 @@ Install the package using pip:
 ```sh
 pip install openai-decorator
 ```
+Save your OpenAI key in an environment variable named `OPENAI_API_KEY`:
+```sh
+export OPENAI_API_KEY=<your key>
+```
 
 ## Usage Guide
 
