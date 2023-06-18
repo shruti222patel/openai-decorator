@@ -104,10 +104,20 @@ def get_json_property_type(python_type: Any) -> str:
             return "object"
 
 
-def openai_func(prompt: str, model: str = "gpt-3.5-turbo-0613", temperature: int = 0):
+def openai_func(
+    prompt: Union[str, Callable[[], str]],
+    model: str = "gpt-3.5-turbo-0613",
+    temperature: int = 0,
+):
     def decorator(func: Callable[..., Any]):
         """A decorator to read the docstring of a function it wraps,
         create a JSON spec, and call OpenAI API."""
+
+        nonlocal prompt
+        # Call the prompt if it is a callable
+        if callable(prompt):
+            prompt = prompt()
+
         # Call the chat_completion_request
         response = generate_parameters(
             prompt, func=func, model=model, temperature=temperature
