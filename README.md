@@ -171,7 +171,7 @@ export OPENAI_API_KEY=<insert your openai key>
 - [ ] Publish the package to PyPI.
 - [ ] Expand test coverage.
 - [ ] Show tests passing & coverage as github badges.
-- [ ] Fix CI/CD -- Address the issue where the pre-release deployment to PyPI fails due to the need for version update.
+- [X] Fix CI/CD -- Address the issue where the pre-release deployment to PyPI fails due to the need for version update.
 - [ ] Add docstrings.
 - [ ] Generate docs (from docstrings).
 
