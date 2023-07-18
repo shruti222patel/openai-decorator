@@ -108,6 +108,7 @@ def openai_func(
     prompt: Union[str, Callable[[], str]],
     model: str = "gpt-3.5-turbo-0613",
     temperature: int = 0,
+    function_call: str = None,
 ):
     def decorator(func: Callable[..., Any]):
         """A decorator to read the docstring of a function it wraps,
@@ -120,7 +121,11 @@ def openai_func(
 
         # Call the chat_completion_request
         response = generate_parameters(
-            prompt, func=func, model=model, temperature=temperature
+            prompt,
+            func=func,
+            model=model,
+            temperature=temperature,
+            function_call=function_call,
         )
 
         # TODO -- log message from openai
@@ -128,11 +133,11 @@ def openai_func(
         func_name, arguments = get_arguments_from_response(response)
         if func_name is None or arguments is None:
             raise ValueError(
-                f"Failed to get a parsable response from openai: {response}"
+                f"OpenAI didn't return a function and/or arguments to call: {response}"
             )
         if func_name != func.__name__:
             raise ValueError(
-                f"Function name from the code {func_name} does not match the name returned by OpenAi {func.__name__}"
+                f"Function name from the code {func_name} does not match the name returned by OpenAI {func.__name__}"
             )
         if arguments is None:
             raise ValueError(f"Failed to get arguments from the response.")
@@ -160,7 +165,7 @@ def get_arguments_from_response(response: Dict[str, Any]) -> (str, Dict[str, Any
 
 
 def generate_parameters(
-    prompt: str, func: Callable[..., Any], model, temperature
+    prompt: str, func: Callable[..., Any], model, temperature, function_call=None
 ) -> (List[Dict[str, str]], Dict[str, Any], Dict[str, Any], str, int):
     messages = [
         {
@@ -170,7 +175,7 @@ def generate_parameters(
         {"role": "user", "content": prompt},
     ]
     functions = [create_function_spec(func)]
-    function_call = {"name": func.__name__}
+    function_call = {"name": func.__name__} if function_call is None else "auto"
 
     return run_openai_chatcompletion(
         messages, functions, function_call, model, temperature
