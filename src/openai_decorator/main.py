@@ -137,7 +137,7 @@ def openai_func(
             )
         if func_name != func.__name__:
             raise ValueError(
-                f"Function name from the code {func_name} does not match the name returned by OpenAi {func.__name__}"
+                f"Function name from the code {func_name} does not match the name returned by OpenAI {func.__name__}"
             )
         if arguments is None:
             raise ValueError(f"Failed to get arguments from the response.")

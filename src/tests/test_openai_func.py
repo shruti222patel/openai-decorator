@@ -30,7 +30,11 @@ def test_openai_func():
         # Get the function passed to generate_parameters -- this is because the decorator changes ghe function
         expected_func = mock_gen_params.call_args[1]["func"]
         mock_gen_params.assert_called_once_with(
-            "prompt", func=expected_func, model="gpt-3.5-turbo-0613", temperature=0
+            "prompt",
+            func=expected_func,
+            model="gpt-3.5-turbo-0613",
+            temperature=0,
+            function_call=None,
         )
 
         # Assert get_arguments_from_response is called with the correct argument
@@ -69,6 +73,7 @@ def test_openai_func_callable_prompt():
             "This is a callable prompt",
             func=expected_func,
             model="gpt-3.5-turbo-0613",
+            function_call=None,
             temperature=0,
         )
 
